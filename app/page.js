@@ -16,7 +16,7 @@ export default function Login() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-10 w-full max-w-md">
 
-        {/* Logo / Brand */}
+        
         <div className="mb-8">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -27,10 +27,10 @@ export default function Login() {
           <p className="text-gray-500 text-sm">Build and download your professional resume in minutes.</p>
         </div>
 
-        {/* Divider */}
+        
         <div className="border-t border-gray-100 mb-8" />
 
-        {/* What you get */}
+        
         <div className="space-y-3 mb-8">
           {[
             "Create beautiful resumes",
@@ -48,7 +48,7 @@ export default function Login() {
           ))}
         </div>
 
-        {/* Google Button */}
+        
         <button
           onClick={loginWithGoogle}
           className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-xl px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-150"
@@ -62,7 +62,7 @@ export default function Login() {
           Continue with Google
         </button>
 
-        {/* Terms */}
+        
         <p className="text-xs text-gray-400 text-center mt-5">
           By signing in, you agree to our Terms and Privacy Policy.
         </p>
