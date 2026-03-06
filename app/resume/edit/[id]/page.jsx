@@ -64,7 +64,7 @@ export default function EditResume() {
     setSaving(true);
   console.log("Updating ID:", id, "Type:", typeof id);
 
-    console.log("Saving data:", formData); // debug log
+    console.log("Saving data:", formData); 
 
     const { data, error } = await supabase
       .from("resumes")
@@ -79,9 +79,9 @@ export default function EditResume() {
         experience: formData.experience,
       })
       .eq("id", id)
-      .select(); // <-- THIS IS THE KEY FIX: forces Supabase to actually run the update
+      .select(); 
 
-    console.log("Update result:", data, error); // debug log
+    console.log("Update result:", data, error); 
 
     setSaving(false);
 

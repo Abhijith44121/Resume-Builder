@@ -66,7 +66,7 @@ export default function ResumePage() {
   setSendingEmail(true);
 
   try {
-    // Step 1 — render resume to canvas
+    
     const html2canvas = (await import("html2canvas")).default;
     const { default: jsPDF } = await import("jspdf");
 
@@ -82,7 +82,7 @@ export default function ResumePage() {
       windowWidth: 794,
     });
 
-    // Step 2 — convert to PDF and get base64 string
+    
     const pdf = new jsPDF({
       unit: "mm",
       format: "a4",
@@ -92,10 +92,10 @@ export default function ResumePage() {
     const imgData = canvas.toDataURL("image/jpeg", 1.0);
     pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
 
-    // output("datauristring") gives base64 PDF
+    
     const pdfBase64 = pdf.output("datauristring").split(",")[1];
 
-    // Step 3 — send to API
+   
     const res = await fetch("/api/send-resume", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -138,7 +138,7 @@ export default function ResumePage() {
         paddingBottom: "32px",
       }}
     >
-      {/* ACTION BUTTONS */}
+      
       <div
         style={{
           display: "flex",
@@ -149,7 +149,7 @@ export default function ResumePage() {
           width: "794px",
         }}
       >
-        {/* TOP ROW — Edit + Download */}
+        
         <div style={{ display: "flex", gap: "10px" }}>
           <button
             onClick={() => router.push(`/resume/edit/${id}`)}
@@ -200,7 +200,7 @@ export default function ResumePage() {
           </button>
         </div>
 
-        {/* EMAIL INPUT ROW */}
+       
         {showEmailBox && (
           <div
             style={{
@@ -268,7 +268,7 @@ export default function ResumePage() {
         )}
       </div>
 
-      {/* A4 RESUME */}
+      
       <div
         id="resume"
         style={{
@@ -283,7 +283,7 @@ export default function ResumePage() {
           boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
         }}
       >
-        {/* HEADER */}
+       
         <div
           style={{
             borderBottom: "1px solid #e5e7eb",
@@ -310,7 +310,7 @@ export default function ResumePage() {
           </p>
         </div>
 
-        {/* MAIN GRID */}
+        
         <div
           style={{
             display: "grid",
@@ -318,7 +318,7 @@ export default function ResumePage() {
             gap: "40px",
           }}
         >
-          {/* LEFT COLUMN */}
+          
           <div>
             <section style={{ marginBottom: "28px" }}>
               <h2
@@ -373,7 +373,7 @@ export default function ResumePage() {
             </section>
           </div>
 
-          {/* RIGHT COLUMN */}
+          
           <div>
             <section style={{ marginBottom: "28px" }}>
               <h2

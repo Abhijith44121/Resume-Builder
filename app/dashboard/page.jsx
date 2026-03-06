@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   async function logout() {
     await supabase.auth.signOut();
-    window.location.href = "/login";
+    window.location.href = "/";
   }
 
   useEffect(() => {
@@ -45,10 +45,7 @@ export default function Dashboard() {
     const confirmDelete = confirm("Delete this resume?");
     if (!confirmDelete) return;
 
-    const { error } = await supabase
-      .from("resumes")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from("resumes").delete().eq("id", id);
 
     if (error) {
       console.log(error);
@@ -61,10 +58,23 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: "40px", maxWidth: "1100px", margin: "0 auto" }}>
-
-      {/* HEADER */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
-        <h1 style={{ fontSize: "28px", fontWeight: "700", color: "#111827", margin: 0 }}>
+      
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "32px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "28px",
+            fontWeight: "700",
+            color: "#111827",
+            margin: 0,
+          }}
+        >
           My Resumes
         </h1>
 
@@ -104,13 +114,23 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* RESUME GRID */}
+      
       {resumes.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "80px 0", color: "#6b7280" }}>
-          <p style={{ fontSize: "16px" }}>No resumes yet. Create your first one!</p>
+        <div
+          style={{ textAlign: "center", padding: "80px 0", color: "#6b7280" }}
+        >
+          <p style={{ fontSize: "16px" }}>
+            No resumes yet. Create new resume.
+          </p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "20px",
+          }}
+        >
           {resumes.map((resume) => (
             <div
               key={resume.id}
@@ -126,9 +146,19 @@ export default function Dashboard() {
                 gap: "12px",
               }}
             >
-              <Link href={`/resume/${resume.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <Link
+                href={`/resume/${resume.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <div style={{ cursor: "pointer" }}>
-                  <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", margin: "0 0 6px 0" }}>
+                  <h2
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      color: "#111827",
+                      margin: "0 0 6px 0",
+                    }}
+                  >
                     {resume.title || "Untitled Resume"}
                   </h2>
                   <p style={{ fontSize: "12px", color: "#9ca3af", margin: 0 }}>
