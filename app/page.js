@@ -7,7 +7,7 @@ export default function Login() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/dashboard",
+        redirectTo: "https://resume-builder-i9p05jpd8-abhijith-as-projects-902aee6c.vercel.app/dashboard",
       },
     });
   };
