@@ -6,23 +6,36 @@ import Link from "next/link";
 
 export default function Dashboard() {
   const [resumes, setResumes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  async function checkUser() {
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) {
-      window.location.href = "/dashboard";
-    }
-  }
+  useEffect(() => {
+    // Listen for auth state — handles OAuth redirect sessions too
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        window.location.href = "/";
+      } else {
+        fetchResumes();
+        setLoading(false);
+      }
+    });
+
+    // Also check immediately in case session already exists
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        window.location.href = "/";
+      } else {
+        fetchResumes();
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   async function logout() {
     await supabase.auth.signOut();
     window.location.href = "/";
   }
-
-  useEffect(() => {
-    checkUser();
-    fetchResumes();
-  }, []);
 
   async function fetchResumes() {
     const { data, error } = await supabase
@@ -56,9 +69,16 @@ export default function Dashboard() {
     setResumes((prev) => prev.filter((resume) => resume.id !== id));
   }
 
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <p style={{ color: "#6b7280", fontSize: "16px" }}>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: "40px", maxWidth: "1100px", margin: "0 auto" }}>
-      
       <div
         style={{
           display: "flex",
@@ -67,14 +87,7 @@ export default function Dashboard() {
           marginBottom: "32px",
         }}
       >
-        <h1
-          style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#111827",
-            margin: 0,
-          }}
-        >
+        <h1 style={{ fontSize: "28px", fontWeight: "700", color: "#111827", margin: 0 }}>
           My Resumes
         </h1>
 
@@ -114,14 +127,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      
       {resumes.length === 0 ? (
-        <div
-          style={{ textAlign: "center", padding: "80px 0", color: "#6b7280" }}
-        >
-          <p style={{ fontSize: "16px" }}>
-            No resumes yet. Create new resume.
-          </p>
+        <div style={{ textAlign: "center", padding: "80px 0", color: "#6b7280" }}>
+          <p style={{ fontSize: "16px" }}>No resumes yet. Create new resume.</p>
         </div>
       ) : (
         <div
@@ -146,19 +154,9 @@ export default function Dashboard() {
                 gap: "12px",
               }}
             >
-              <Link
-                href={`/resume/${resume.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+              <Link href={`/resume/${resume.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div style={{ cursor: "pointer" }}>
-                  <h2
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      color: "#111827",
-                      margin: "0 0 6px 0",
-                    }}
-                  >
+                  <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", margin: "0 0 6px 0" }}>
                     {resume.title || "Untitled Resume"}
                   </h2>
                   <p style={{ fontSize: "12px", color: "#9ca3af", margin: 0 }}>

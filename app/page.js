@@ -5,11 +5,11 @@ import { supabase } from "@/lib/supabase";
 export default function Login() {
   const loginWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "https://resume-builder-i9p05jpd8-abhijith-as-projects-902aee6c.vercel.app/dashboard",
-      },
-    });
+  provider: 'google',
+  options: {
+    redirectTo: `${window.location.origin}/auth/callback`,
+  },
+});
   };
 
   return (
