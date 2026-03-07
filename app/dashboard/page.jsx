@@ -9,7 +9,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Listen for auth state — handles OAuth redirect sessions too
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
         window.location.href = "/";
@@ -19,7 +19,7 @@ export default function Dashboard() {
       }
     });
 
-    // Also check immediately in case session already exists
+   
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
         window.location.href = "/";
