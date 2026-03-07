@@ -170,7 +170,7 @@ export default function Dashboard() {
               </Link>
 
               <div style={{ display: "flex", gap: "8px" }}>
-                <Link href={`/resume/${resume.id}/edit`} style={{ flex: 1 }}>
+                <Link href={`/resume/edit/${resume.id}`} style={{ flex: 1 }}>
                   <button
                     style={{
                       width: "100%",
